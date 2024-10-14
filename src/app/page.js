@@ -5,12 +5,9 @@ import styles from "./page.module.css";
 import Login from "./pages/login/page";
 
 export default function Home() {
-  const username = localStorage.setItem("username", "jello")
-  if (typeof window !== 'undefined') {
-    console.log('Currently on Client side')
-  } else {
-    console.log('Currently on Server Side');
-  }
+  const username = localStorage.getItem("username")
+
+  // localStorage.setItem("username", "")
   return (
     <div >
       {!username ? <Login /> :
