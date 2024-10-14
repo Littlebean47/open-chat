@@ -2,10 +2,7 @@
 .pageContainer {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    /* Ensure container fills the full height of the viewport */
-    overflow: hidden;
-    /* Prevent overflow */
+    flex: 99.95;
 }
 
 /* Content area that takes up remaining space above the chat input */
@@ -92,26 +89,21 @@
     padding: 10px;
     background-color: #e0e0e0;
     border-radius: 8px;
-    max-width: 60%;
-    /* Limits the width of the messages */
+    max-width: 60%; /* Limits the width of the messages */
     align-self: flex-start;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    white-space: pre-wrap;
-    /* Ensures text wraps within the message box */
+    white-space: pre-wrap; /* Ensures text wraps within the message box */
     box-sizing: border-box;
 }
 
 /* User message styling */
 .userMessage {
     background-color: #d1e7dd;
-    max-width: 60%;
-    /* Limits the width of user messages */
-    align-self: flex-end;
-    /* Aligns user messages to the right */
+    max-width: 60%; /* Limits the width of user messages */
+    align-self: flex-end; /* Aligns user messages to the right */
     word-wrap: break-word;
     overflow-wrap: break-word;
-    white-space: pre-wrap;
-    /* Ensures text wraps within the message box */
+    white-space: pre-wrap; /* Ensures text wraps within the message box */
     box-sizing: border-box;
 }
