@@ -7,9 +7,9 @@ import Login from "./pages/login/page";
 export default function Home() {
   const username = localStorage.getItem("username")
 
-  // localStorage.setItem("username", "")
+  // localStorage.setItem("username", "Fluco")
   return (
-    <div >
+    <div>
       {!username ? <Login /> :
         <div className={styles.app}>
           <Sidebar />

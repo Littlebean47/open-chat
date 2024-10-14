@@ -6,13 +6,15 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 function ChatContainer() {
   const [messageInput, setMessageInput] = React.useState("")
   const [messages, setMessages] = React.useState([])
+  const username = localStorage.getItem("username")
 
   const sendMessage = (e) => {
     e.preventDefault();
     setMessages([...messages, {
       message: messageInput,
       key: Math.random(),
-      isUserMessage: true
+      sender: username,
+      isUserMessage: username === localStorage.getItem("username")
     }])
     setMessageInput("")
   }
@@ -24,8 +26,9 @@ function ChatContainer() {
           messages.map((message) => (
             <p
               key={message.key}
-              className={`${styles.message} ${message.isUserMessage ? styles.userMessage : ''}`}
+              className={`${styles.message} ${message.sender === username ? styles.userMessage : ''}`}
             >
+              <p className={styles.sender}>{message.sender}</p>
               {message.message}
             </p>
           ))

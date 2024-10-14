@@ -107,3 +107,7 @@
     white-space: pre-wrap; /* Ensures text wraps within the message box */
     box-sizing: border-box;
 }
+
+.sender {
+    font-size: small;
+}
