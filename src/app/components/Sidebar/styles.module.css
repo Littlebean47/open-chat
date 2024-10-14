@@ -1,0 +1,17 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #d8d8d8;
+    flex: .05;
+    align-items: center;
+    padding: 20px;
+}
+
+.personIcon {
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+}
+
+.chatIcon {
+    cursor: pointer;
+}
