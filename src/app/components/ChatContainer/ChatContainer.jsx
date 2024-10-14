@@ -5,22 +5,16 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 function ChatContainer() {
   const [messageInput, setMessageInput] = React.useState("")
-  // const [messages, setMessages] = React.useState([])
-
-  const messages = new Array(50).fill(0).map((item, i) => {
-    return {
-      message: i % 2 === 0 ? "Hello from userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr" : "Hello from system",
-      key: i,
-      isUserMessage: i % 2 === 0, // Let's assume every other message is from the user
-    }
-  })
+  const [messages, setMessages] = React.useState([])
 
   const sendMessage = (e) => {
     e.preventDefault();
-    messages.push({
+    setMessages([...messages, {
       message: messageInput,
-      key: Math.random()
-    })
+      key: Math.random(),
+      isUserMessage: true
+    }])
+    setMessageInput("")
   }
 
   return (
@@ -36,7 +30,6 @@ function ChatContainer() {
             </p>
           ))
         }
-        {/* hello */}
       </div>
       <div className={styles.chatBox}>
         <textarea
