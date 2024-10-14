@@ -1,38 +1,69 @@
-"use client"
-import React from 'react'
-import styles from './styles.module.css'
+"use client";
+import React, { useEffect } from 'react';
+import io from 'socket.io-client'; // Import Socket.IO client
+import styles from './styles.module.css';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
+const socket = io('http://localhost:3001');
+
 function ChatContainer() {
-  const [messageInput, setMessageInput] = React.useState("")
-  const [messages, setMessages] = React.useState([])
-  const username = localStorage.getItem("username")
+  const [messageInput, setMessageInput] = React.useState("");
+  const [messages, setMessages] = React.useState([]);
+  const [usersJoined, setUsersJoined] = React.useState([])
+
+  const username = localStorage.getItem("username");
+
+  useEffect(() => {
+    socket.emit("username", username)
+
+    // Listen for incoming messages from the server
+    socket.on('chat message', (messageData) => {
+      setMessages((prevMessages) => [...prevMessages, messageData]);
+    });
+
+    socket.on("message", (msg) => {
+      setUsersJoined([...usersJoined, msg])
+    })
+
+    // Clean up the socket connection when the component unmounts
+    return () => {
+      socket.off('chat message');
+    };
+  }, [username]);
 
   const sendMessage = (e) => {
     e.preventDefault();
-    setMessages([...messages, {
+
+    const newMessage = {
       message: messageInput,
       key: Math.random(),
       sender: username,
-      isUserMessage: username === localStorage.getItem("username")
-    }])
-    setMessageInput("")
-  }
+      isUserMessage: username === localStorage.getItem("username"),
+    };
+
+    // Emit the message to the server
+    socket.emit('chat message', newMessage);
+
+    setMessageInput("");
+  };
 
   return (
     <div className={styles.pageContainer}>
       <div className={styles.content}>
-        {
-          messages.map((message) => (
-            <p
-              key={message.key}
-              className={`${styles.message} ${message.sender === username ? styles.userMessage : ''}`}
-            >
-              <p className={styles.sender}>{message.sender}</p>
-              {message.message}
-            </p>
-          ))
-        }
+        <div className={styles.welcomeMessages}>
+          {usersJoined.map((user) => {
+            return <p className={styles.welcomeMessage}>{user}</p>
+          })}
+        </div>
+        {messages.map((message) => (
+          <div
+            key={message.key}
+            className={`${styles.message} ${message.sender === username ? styles.userMessage : ''}`}
+          >
+            <p className={styles.sender}>{message.sender}</p>
+            {message.message}
+          </div>
+        ))}
       </div>
       <div className={styles.chatBox}>
         <textarea
@@ -46,7 +77,7 @@ function ChatContainer() {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default ChatContainer
+export default ChatContainer;
