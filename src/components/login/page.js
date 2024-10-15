@@ -11,7 +11,6 @@ function Login() {
 
     const handleUsername = (e) => {
         e.preventDefault()
-        localStorage.setItem("username", username)
         dispatch(login(username))
     }
 
