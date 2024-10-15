@@ -1,16 +1,19 @@
 "use client"
 import React from "react"
 import styles from './styles.module.css'
+import { useDispatch } from "react-redux"
+import { login } from "@/app/lib/features/user/userSlice"
 
 
 function Login() {
-
-    //////////////////////////////////////////////////////////////////////////////
-    //This Component is purely used to diplay the differences in next.js routing//
-    /////////////////////////////////////////////////////////////////////////////
-
-
+    const dispatch = useDispatch()
     const [username, setUsername] = React.useState("")
+
+    const handleUsername = (e) => {
+        e.preventDefault()
+        localStorage.setItem("username", username)
+        dispatch(login(username))
+    }
 
     return (
         <div className={styles.loginContainer}>
@@ -18,7 +21,7 @@ function Login() {
                 <h2>Open-Chat</h2>
                 <div className={styles.inputContainer}>
                     <input placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} name="usernameInput"/>
-                    <button disabled={!username} name="usernameSubmit">Enter</button>
+                    <button onClick={handleUsername} disabled={!username} name="usernameSubmit">Enter</button>
                 </div>
             </div>
         </div>
