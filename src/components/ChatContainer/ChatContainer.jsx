@@ -40,7 +40,6 @@ function ChatContainer() {
       message: messageInput,
       key: Math.random(),
       sender: username,
-      isUserMessage: username === localStorage.getItem("username"),
     };
 
     // Emit the message to the server
