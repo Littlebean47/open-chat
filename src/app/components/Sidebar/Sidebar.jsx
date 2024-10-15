@@ -11,10 +11,10 @@ function Sidebar() {
     return (
         <div className={styles.sidebar}>
             <div className={styles.logoutIcon}>
-                <LogoutIcon fontSize='large' onClick={logout} />
+                <LogoutIcon fontSize='medium' onClick={logout} />
             </div>
             <div className={styles.chatIcon}>
-                <ChatBubbleIcon fontSize='large' />
+                <ChatBubbleIcon fontSize='medium' />
             </div>
         </div>
     )
