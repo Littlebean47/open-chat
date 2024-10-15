@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import io from 'socket.io-client'; // Import Socket.IO client
 import styles from './styles.module.css';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { useSelector } from 'react-redux';
 
 const socket = io('http://localhost:3001');
 
@@ -11,7 +12,8 @@ function ChatContainer() {
   const [messages, setMessages] = React.useState([]);
   const [usersJoined, setUsersJoined] = React.useState([])
 
-  const username = localStorage.getItem("username");
+  const username = useSelector((state) => state.user.value)
+
 
   useEffect(() => {
     socket.emit("username", username)
@@ -52,7 +54,7 @@ function ChatContainer() {
       <div className={styles.content}>
         <div className={styles.welcomeMessages}>
           {usersJoined.map((user) => {
-            return <p className={styles.welcomeMessage}>{user}</p>
+            return <p className={styles.welcomeMessage} key={Math.random()}>{user}</p>
           })}
         </div>
         {messages.map((message) => (
@@ -71,6 +73,7 @@ function ChatContainer() {
           placeholder="Type your message here..."
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
+          name='chatInput'
         />
         <button className={styles.sendButton} onClick={sendMessage} disabled={!messageInput}>
           <ArrowUpwardIcon />
