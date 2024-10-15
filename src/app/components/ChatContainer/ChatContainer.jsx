@@ -72,7 +72,7 @@ function ChatContainer() {
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
         />
-        <button className={styles.sendButton} onClick={sendMessage}>
+        <button className={styles.sendButton} onClick={sendMessage} disabled={!messageInput}>
           <ArrowUpwardIcon />
         </button>
       </div>
