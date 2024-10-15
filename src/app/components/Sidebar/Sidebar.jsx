@@ -1,13 +1,17 @@
 import React from 'react'
 import styles from "./styles.module.css"
-import Person2Icon from '@mui/icons-material/Person2';
+import LogoutIcon from '@mui/icons-material/Logout';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 
 function Sidebar() {
+    const logout = () => {
+        localStorage.setItem("username", "")
+        location.reload()
+    }
     return (
         <div className={styles.sidebar}>
-            <div className={styles.personIcon}>
-                <Person2Icon fontSize='large' />
+            <div className={styles.logoutIcon}>
+                <LogoutIcon fontSize='large' onClick={logout} />
             </div>
             <div className={styles.chatIcon}>
                 <ChatBubbleIcon fontSize='large' />
