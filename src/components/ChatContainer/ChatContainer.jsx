@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import io from 'socket.io-client'; // Import Socket.IO client
 import styles from './styles.module.css';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -12,30 +12,35 @@ function ChatContainer() {
   const [welcomeMessage, setWelcomeMessage] = React.useState("")
 
   const username = useSelector((state) => state.user.value)
-  const socket = io('http://localhost:3001', {
-    query: { username }
-  });
+  const socketRef = useRef(null)
 
   useEffect(() => {
+    // Ensuring socket is not created more than once
+    socketRef.current = io('http://localhost:3001', {
+      query: { username }
+    });
+
     // Listen for welcome message
-    socket.on("welcome", (message) => {
+    socketRef.current.on("welcome", (message) => {
       setWelcomeMessage(message)
     })
 
-
     // Listen for incoming messages from the server
-    socket.on('chat message', (messageData) => {
+    socketRef.current.on('chat message', (messageData) => {
       setMessages((prevMessages) => [...prevMessages, messageData]);
     });
 
-    socket.on("message", (msg) => {
-      // setUsersJoined([...usersJoined, msg])
+    // Listen for new users
+    socketRef.current.on("user joined", (messageData) => {
+      setMessages((prevMessages) => [...prevMessages, messageData]);
     })
 
-    // Clean up the socket connection when the component unmounts
+    // Clean up the socketRef.current connection when the component unmounts
     return () => {
-      socket.off("welcome")
-      socket.off('chat message');
+      socketRef.current.off("welcome")
+      socketRef.current.off('chat message');
+      socketRef.current.off("user joined")
+      socketRef.current.disconnect()
     };
   }, [username]);
 
@@ -49,7 +54,7 @@ function ChatContainer() {
     };
 
     // Emit the message to the server
-    socket.emit('chat message', newMessage);
+    socketRef.current.emit('chat message', newMessage);
 
     setMessageInput("");
   };
