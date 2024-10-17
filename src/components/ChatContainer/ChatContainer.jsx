@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 function ChatContainer() {
   const [messageInput, setMessageInput] = React.useState("");
   const [messages, setMessages] = React.useState([]);
-  const [usersJoined, setUsersJoined] = React.useState([])
   const [welcomeMessage, setWelcomeMessage] = React.useState("")
 
   const username = useSelector((state) => state.user.value)
@@ -30,7 +29,7 @@ function ChatContainer() {
     });
 
     socket.on("message", (msg) => {
-      setUsersJoined([...usersJoined, msg])
+      // setUsersJoined([...usersJoined, msg])
     })
 
     // Clean up the socket connection when the component unmounts
@@ -62,9 +61,6 @@ function ChatContainer() {
           <p className={styles.welcome}>
             {welcomeMessage}
           </p>
-          {/* {usersJoined.map((user) => {
-            return <p className={styles.welcomeMessage} key={Math.random()}>{user}</p>
-          })} */}
         </div>
         {messages.map((message) => (
           <div
