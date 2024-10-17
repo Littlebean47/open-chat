@@ -5,18 +5,24 @@ import styles from './styles.module.css';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { useSelector } from 'react-redux';
 
-const socket = io('http://localhost:3001');
 
 function ChatContainer() {
   const [messageInput, setMessageInput] = React.useState("");
   const [messages, setMessages] = React.useState([]);
   const [usersJoined, setUsersJoined] = React.useState([])
+  const [welcomeMessage, setWelcomeMessage] = React.useState("")
 
   const username = useSelector((state) => state.user.value)
-
+  const socket = io('http://localhost:3001', {
+    query: { username }
+  });
 
   useEffect(() => {
-    socket.emit("username", username)
+    // Listen for welcome message
+    socket.on("welcome", (message) => {
+      setWelcomeMessage(message)
+    })
+
 
     // Listen for incoming messages from the server
     socket.on('chat message', (messageData) => {
@@ -29,6 +35,7 @@ function ChatContainer() {
 
     // Clean up the socket connection when the component unmounts
     return () => {
+      socket.off("welcome")
       socket.off('chat message');
     };
   }, [username]);
@@ -52,9 +59,12 @@ function ChatContainer() {
     <div className={styles.pageContainer}>
       <div className={styles.content}>
         <div className={styles.welcomeMessages}>
-          {usersJoined.map((user) => {
+          <p className={styles.welcome}>
+            {welcomeMessage}
+          </p>
+          {/* {usersJoined.map((user) => {
             return <p className={styles.welcomeMessage} key={Math.random()}>{user}</p>
-          })}
+          })} */}
         </div>
         {messages.map((message) => (
           <div

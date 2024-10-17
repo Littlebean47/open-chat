@@ -122,11 +122,8 @@
     font-size: small;
 }
 
-.welcomeMessage {
+.welcome {
     display: flex;
     justify-content: center;
-}
-
-.welcomeMessage {
     color: #007BFF;
 }
