@@ -10,6 +10,7 @@ function ChatContainer() {
   const [messageInput, setMessageInput] = React.useState("");
   const [messages, setMessages] = React.useState([]);
   const [welcomeMessage, setWelcomeMessage] = React.useState("")
+  const [onlineUsers, setOnlineUsers] = React.useState([])
 
   const username = sessionStorage.getItem("username")
   const socketRef = useRef(null)
@@ -35,11 +36,16 @@ function ChatContainer() {
       setMessages((prevMessages) => [...prevMessages, messageData]);
     })
 
+    socketRef.current.on("online users", (users) => {
+      setOnlineUsers((prevUsers) => [...prevUsers, users])
+    })
+
     // Clean up the socketRef.current connection when the component unmounts
     return () => {
       socketRef.current.off("welcome")
       socketRef.current.off('chat message');
       socketRef.current.off("user joined")
+      socketRef.current.off("online users")
       socketRef.current.disconnect()
     };
   }, [username]);
