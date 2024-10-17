@@ -11,6 +11,7 @@ function Sidebar() {
 
     const logout = () => {
         dispatch(userSlice.actions.logout())
+        sessionStorage.clear()
     }
 
     return (

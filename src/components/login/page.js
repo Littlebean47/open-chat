@@ -12,6 +12,7 @@ function Login() {
     const handleUsername = (e) => {
         e.preventDefault()
         dispatch(login(username))
+        sessionStorage.setItem("username", username)
     }
 
     return (

@@ -11,7 +11,7 @@ function ChatContainer() {
   const [messages, setMessages] = React.useState([]);
   const [welcomeMessage, setWelcomeMessage] = React.useState("")
 
-  const username = useSelector((state) => state.user.value)
+  const username = sessionStorage.getItem("username")
   const socketRef = useRef(null)
 
   useEffect(() => {
