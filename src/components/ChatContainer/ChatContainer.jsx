@@ -3,14 +3,15 @@ import React, { useEffect, useRef } from 'react';
 import io from 'socket.io-client'; // Import Socket.IO client
 import styles from './styles.module.css';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { populateUsers } from '@/app/lib/features/user/users/onlineUsers';
 
 
 function ChatContainer() {
   const [messageInput, setMessageInput] = React.useState("");
   const [messages, setMessages] = React.useState([]);
   const [welcomeMessage, setWelcomeMessage] = React.useState("")
-  const [onlineUsers, setOnlineUsers] = React.useState([])
+  const dispatch = useDispatch()
 
   const username = sessionStorage.getItem("username")
   const socketRef = useRef(null)
@@ -37,7 +38,7 @@ function ChatContainer() {
     })
 
     socketRef.current.on("online users", (users) => {
-      setOnlineUsers((prevUsers) => [...prevUsers, users])
+      dispatch(populateUsers(users))
     })
 
     // Clean up the socketRef.current connection when the component unmounts

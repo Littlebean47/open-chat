@@ -3,24 +3,18 @@ import React from 'react'
 import styles from "./styles.module.css"
 import LogoutIcon from '@mui/icons-material/Logout';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userSlice } from '@/app/lib/features/user/userSlice';
 import OnlineUser from '../utils/OnlineUserCard/OnlineUser';
 
 function Sidebar() {
     const dispatch = useDispatch()
+    const users = useSelector((state) => state.onlineUsers.value)
 
     const logout = () => {
         dispatch(userSlice.actions.logout())
         sessionStorage.clear()
     }
-
-    const mockdata = new Array(20).fill(0).map((_, i)=>{
-        return {
-            user: "Fluco"
-        }
-    })
-    console.log(mockdata)
     return (
         <div className={styles.sidebar}>
             <div className={styles.iconContainer}>
@@ -33,10 +27,9 @@ function Sidebar() {
             </div>
             <div className={styles.availableUsers}>
                 <p>Online Users</p>
-                {/* <OnlineUser username={"Fluco"} /> */}
                 {
-                    mockdata.map((user) => {
-                        return <OnlineUser username={user.user} />
+                    users.map((user) => {
+                        return <OnlineUser username={user} />
                     })
                 }
             </div>
