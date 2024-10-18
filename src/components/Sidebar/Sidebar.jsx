@@ -5,6 +5,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import { useDispatch } from 'react-redux';
 import { userSlice } from '@/app/lib/features/user/userSlice';
+import OnlineUser from '../utils/OnlineUserCard/OnlineUser';
 
 function Sidebar() {
     const dispatch = useDispatch()
@@ -25,7 +26,8 @@ function Sidebar() {
                 </div>
             </div>
             <div className={styles.availableUsers}>
-            hello
+                <p>Online Users</p>
+                <OnlineUser username={"Fluco"} />
             </div>
         </div>
     )
