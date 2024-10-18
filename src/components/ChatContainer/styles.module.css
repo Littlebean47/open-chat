@@ -2,7 +2,7 @@
 .pageContainer {
     display: flex;
     flex-direction: column;
-    flex: .75;
+    flex: .70;
 }
 
 /* Content area that takes up remaining space above the chat input */
