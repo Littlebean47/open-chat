@@ -16,11 +16,16 @@ function Sidebar() {
 
     return (
         <div className={styles.sidebar}>
-            <div className={styles.logoutIcon}>
-                <LogoutIcon fontSize='medium' onClick={logout} />
+            <div className={styles.iconContainer}>
+                <div className={styles.logoutIcon}>
+                    <LogoutIcon fontSize='medium' onClick={logout} />
+                </div>
+                <div className={styles.chatIcon}>
+                    <ChatBubbleIcon fontSize='medium' />
+                </div>
             </div>
-            <div className={styles.chatIcon}>
-                <ChatBubbleIcon fontSize='medium' />
+            <div className={styles.availableUsers}>
+            hello
             </div>
         </div>
     )

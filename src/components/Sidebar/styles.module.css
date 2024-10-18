@@ -1,10 +1,9 @@
 .sidebar {
     display: flex;
-    flex-direction: column;
     border-right: 1px solid #d8d8d8;
     flex: .05;
     align-items: center;
-    padding: 20px;
+    align-items: flex-start;
 }
 
 .logoutIcon {
@@ -14,4 +13,17 @@
 
 .chatIcon {
     cursor: pointer;
+}
+
+.iconContainer {
+    border-right: 1px solid #d8d8d8;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.availableUsers{
+    padding: 4rem;
+    height: 100vh;
 }
