@@ -15,6 +15,12 @@ function Sidebar() {
         sessionStorage.clear()
     }
 
+    const mockdata = new Array(20).fill(0).map((_, i)=>{
+        return {
+            user: "Fluco"
+        }
+    })
+    console.log(mockdata)
     return (
         <div className={styles.sidebar}>
             <div className={styles.iconContainer}>
@@ -27,7 +33,12 @@ function Sidebar() {
             </div>
             <div className={styles.availableUsers}>
                 <p>Online Users</p>
-                <OnlineUser username={"Fluco"} />
+                {/* <OnlineUser username={"Fluco"} /> */}
+                {
+                    mockdata.map((user) => {
+                        return <OnlineUser username={user.user} />
+                    })
+                }
             </div>
         </div>
     )
