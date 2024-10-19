@@ -41,12 +41,17 @@ function ChatContainer() {
       dispatch(populateUsers(users))
     })
 
+    socketRef.current.on("user left", (messageData) => {
+      setMessages((prevMessages) => [...prevMessages, messageData])
+    })
+
     // Clean up the socketRef.current connection when the component unmounts
     return () => {
       socketRef.current.off("welcome")
       socketRef.current.off('chat message');
       socketRef.current.off("user joined")
       socketRef.current.off("online users")
+      socketRef.current.off("user left")
       socketRef.current.disconnect()
     };
   }, [username]);
@@ -67,6 +72,7 @@ function ChatContainer() {
   };
 
   return (
+    // TODO: Install React router dom
     <div className={styles.pageContainer}>
       <div className={styles.content}>
         <div className={styles.welcomeMessages}>

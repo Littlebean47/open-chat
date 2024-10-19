@@ -40,6 +40,7 @@
     outline: none;
     resize: none;
     margin-right: 5px;
+    font-style: italic;
 }
 
 /* Hide scrollbar in WebKit browsers (Chrome, Safari) */
