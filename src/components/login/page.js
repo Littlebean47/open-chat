@@ -11,6 +11,7 @@ function Login() {
 
     const handleUsername = (e) => {
         e.preventDefault()
+        if(username.length > 20) return alert("Username must be less than 15 characters.")
         dispatch(login(username))
         sessionStorage.setItem("username", username)
     }
