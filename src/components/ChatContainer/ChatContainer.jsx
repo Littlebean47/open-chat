@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { useDispatch } from 'react-redux';
 import { populateUsers } from '@/app/lib/features/user/users/onlineUsers';
-
+import SOCKETS from '../utils/sockets.config';
 
 function ChatContainer() {
   const [messageInput, setMessageInput] = React.useState("");
@@ -23,35 +23,35 @@ function ChatContainer() {
     });
 
     // Listen for welcome message
-    socketRef.current.on("welcome", (message) => {
+    socketRef.current.on(SOCKETS.welcome, (message) => {
       setWelcomeMessage(message)
     })
 
     // Listen for incoming messages from the server
-    socketRef.current.on('chat message', (messageData) => {
+    socketRef.current.on(SOCKETS.chatMessage, (messageData) => {
       setMessages((prevMessages) => [...prevMessages, messageData]);
     });
 
     // Listen for new users
-    socketRef.current.on("user joined", (messageData) => {
+    socketRef.current.on(SOCKETS.userJoined, (messageData) => {
       setMessages((prevMessages) => [...prevMessages, messageData]);
     })
 
-    socketRef.current.on("online users", (users) => {
+    socketRef.current.on(SOCKETS.onlineUsers, (users) => {
       dispatch(populateUsers(users))
     })
 
-    socketRef.current.on("user left", (messageData) => {
+    socketRef.current.on(SOCKETS.userLeft, (messageData) => {
       setMessages((prevMessages) => [...prevMessages, messageData])
     })
 
     // Clean up the socketRef.current connection when the component unmounts
     return () => {
-      socketRef.current.off("welcome")
-      socketRef.current.off('chat message');
-      socketRef.current.off("user joined")
-      socketRef.current.off("online users")
-      socketRef.current.off("user left")
+      socketRef.current.off(SOCKETS.welcome)
+      socketRef.current.off(SOCKETS.chatMessage);
+      socketRef.current.off(SOCKETS.userJoined)
+      socketRef.current.off(SOCKETS.onlineUsers)
+      socketRef.current.off(SOCKETS.userLeft)
       socketRef.current.disconnect()
     };
   }, [username]);
